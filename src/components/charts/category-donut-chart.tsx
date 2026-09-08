@@ -52,73 +52,82 @@ export function CategoryDonutChart({
   const percentages = distributePercentages(slices.map((s) => s.value));
 
   return (
-    <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-      <div className="relative mx-auto h-48 w-48 shrink-0 sm:mx-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={slices}
-              dataKey="value"
-              nameKey="name"
-              innerRadius="66%"
-              outerRadius="100%"
-              paddingAngle={2}
-              cornerRadius={3}
-              stroke="var(--surface)"
-              strokeWidth={2}
-            >
-              {slices.map((slice) => (
-                <Cell key={slice.name} fill={slice.color} />
-              ))}
-            </Pie>
-            <Tooltip
-              content={({ active, payload }) => (
-                <ChartTooltipContent
-                  active={active}
-                  entries={payload?.map((p) => ({
-                    label: p.name as string,
-                    value: p.value as number,
-                    color: (p.payload as { color: string }).color,
-                  }))}
-                />
-              )}
-            />
-          </PieChart>
-        </ResponsiveContainer>
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-xs font-medium text-subtle">Total</span>
-          <span className="text-lg font-semibold tabular-nums text-foreground">
-            {formatCurrency(total, settings.currency, { compact: true })}
-          </span>
-        </div>
-      </div>
-
-      <ul className="flex-1 space-y-2.5" aria-label="Category breakdown">
-        {slices.map((slice, index) => {
-          const Icon = getCategoryIcon(slice.icon ?? "more-horizontal");
-          const pct = percentages[index];
-          // A share can legitimately floor to 0% (e.g. ₺2.50 of ₺558.10 is
-          // under half a percent) - showing a bare "0%" next to a non-zero
-          // amount reads as broken, so say "<1%" instead of implying there's
-          // no spending in that category at all.
-          const pctLabel = pct === 0 && slice.value > 0 ? "<1%" : `${pct}%`;
-          return (
-            <li key={slice.name} className="flex items-center gap-2.5 text-sm">
-              <span
-                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-                style={{ backgroundColor: `${slice.color}1f` }}
+    // `@container` makes the row-vs-stacked decision below respond to this
+    // card's actual rendered width, not the viewport's. A viewport-based
+    // breakpoint (e.g. `sm:flex-row`) is wrong here because this chart can
+    // sit in a narrow grid column (as little as ~350-450px) even on a wide
+    // desktop screen - the viewport says "plenty of room," but the card
+    // doesn't have it, and forcing the row layout anyway is what squeezed
+    // the legend's percentage/amount columns outside the card.
+    <div className="@container">
+      <div className="flex flex-col gap-5 @md:flex-row @md:items-center">
+        <div className="relative mx-auto h-48 w-48 shrink-0 @md:mx-0">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={slices}
+                dataKey="value"
+                nameKey="name"
+                innerRadius="66%"
+                outerRadius="100%"
+                paddingAngle={2}
+                cornerRadius={3}
+                stroke="var(--surface)"
+                strokeWidth={2}
               >
-                <Icon className="h-3.5 w-3.5" style={{ color: slice.color }} aria-hidden />
-              </span>
-              <span className="flex-1 truncate text-foreground">{slice.name}</span>
-              <span className="tabular-nums text-muted">{pctLabel}</span>
-              <span className="w-20 text-right tabular-nums font-medium text-foreground">
-                {formatCurrency(slice.value, settings.currency, { compact: true })}
-              </span>
-            </li>
-          );
-        })}
-      </ul>
+                {slices.map((slice) => (
+                  <Cell key={slice.name} fill={slice.color} />
+                ))}
+              </Pie>
+              <Tooltip
+                content={({ active, payload }) => (
+                  <ChartTooltipContent
+                    active={active}
+                    entries={payload?.map((p) => ({
+                      label: p.name as string,
+                      value: p.value as number,
+                      color: (p.payload as { color: string }).color,
+                    }))}
+                  />
+                )}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+            <span className="text-xs font-medium text-subtle">Total</span>
+            <span className="text-lg font-semibold tabular-nums text-foreground">
+              {formatCurrency(total, settings.currency)}
+            </span>
+          </div>
+        </div>
+
+        <ul className="min-w-0 flex-1 space-y-2.5" aria-label="Category breakdown">
+          {slices.map((slice, index) => {
+            const Icon = getCategoryIcon(slice.icon ?? "more-horizontal");
+            const pct = percentages[index];
+            // A share can legitimately floor to 0% (e.g. ₺2.50 of ₺558.10 is
+            // under half a percent) - showing a bare "0%" next to a non-zero
+            // amount reads as broken, so say "<1%" instead of implying
+            // there's no spending in that category at all.
+            const pctLabel = pct === 0 && slice.value > 0 ? "<1%" : `${pct}%`;
+            return (
+              <li key={slice.name} className="flex min-w-0 items-center gap-2.5 text-sm">
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
+                  style={{ backgroundColor: `${slice.color}1f` }}
+                >
+                  <Icon className="h-3.5 w-3.5" style={{ color: slice.color }} aria-hidden />
+                </span>
+                <span className="min-w-0 flex-1 truncate text-foreground">{slice.name}</span>
+                <span className="shrink-0 tabular-nums text-muted">{pctLabel}</span>
+                <span className="shrink-0 text-right tabular-nums font-medium text-foreground">
+                  {formatCurrency(slice.value, settings.currency)}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </div>
   );
 }

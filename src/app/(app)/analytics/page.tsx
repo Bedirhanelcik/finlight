@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-            <Card>
+            <Card className="min-w-0">
               <CardHeader>
                 <CardTitle>Category breakdown</CardTitle>
               </CardHeader>

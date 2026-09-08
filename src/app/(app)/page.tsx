@@ -129,7 +129,7 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="animate-fade-in-up xl:col-span-2">
+        <Card className="animate-fade-in-up min-w-0 xl:col-span-2">
           <CardHeader>
             <CardTitle>Spending by category</CardTitle>
             <span className="text-xs text-subtle">This month</span>

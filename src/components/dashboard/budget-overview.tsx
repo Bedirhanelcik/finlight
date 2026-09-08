@@ -18,7 +18,7 @@ export function BudgetOverview() {
   );
 
   return (
-    <Card className="animate-fade-in-up">
+    <Card className="min-w-0 animate-fade-in-up">
       <CardHeader>
         <CardTitle>Budget overview</CardTitle>
         <Link href="/budgets" className="text-sm font-medium text-accent hover:underline">
@@ -43,21 +43,21 @@ export function BudgetOverview() {
         ) : (
           <div className="flex flex-col gap-4">
             {progress.slice(0, 5).map((b) => (
-              <div key={b.budget.id} className="flex flex-col gap-1.5">
-                <div className="flex items-center gap-2.5">
+              <div key={b.budget.id} className="flex min-w-0 flex-col gap-1.5">
+                <div className="flex min-w-0 items-center gap-2.5">
                   <CategoryIcon
                     icon={b.category?.icon ?? "more-horizontal"}
                     colorIndex={b.category?.colorIndex ?? 0}
                     size="sm"
                   />
-                  <span className="flex-1 truncate text-sm font-medium text-foreground">
+                  <span className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">
                     {b.category?.name ?? "Uncategorized"}
                   </span>
                   {b.status === "critical" && <Badge variant="negative">Over</Badge>}
                   {b.status === "warning" && <Badge variant="warning">Near limit</Badge>}
-                  <span className="text-xs tabular-nums text-muted">
-                    {formatCurrency(b.spent, settings.currency, { compact: true })} /{" "}
-                    {formatCurrency(b.budget.amount, settings.currency, { compact: true })}
+                  <span className="shrink-0 whitespace-nowrap text-xs tabular-nums text-muted">
+                    {formatCurrency(b.spent, settings.currency)} /{" "}
+                    {formatCurrency(b.budget.amount, settings.currency)}
                   </span>
                 </div>
                 <ProgressBar percentage={b.percentage} status={b.status} />
