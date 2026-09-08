@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <img <img src="./public/home.png" alt="Finlight — Personal Finance Dashboard" width="100%">
+   <img src="./public/home.png" alt="Finlight — Personal Finance Dashboard" width="100%">
 </p>
 
 <p align="center">
