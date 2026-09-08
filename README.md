@@ -1,3 +1,20 @@
+<p align="center">
+  <a href="https://finlightapp.vercel.app">
+    <strong>Live Demo → finlightapp.vercel.app</strong>
+  </a>
+</p>
+
+<p align="center">
+  <img <img src="/home.png" alt="Finlight — Personal Finance Dashboard" width="100%">
+</p>
+
+<p align="center">
+  A fully responsive personal finance application, live on the web and optimized for both desktop and mobile.
+</p>
+
+# Finlight
+
+A real, authenticated personal finance web app — track transactions, set monthly budgets, and understand your spending, backed by Supabase (PostgreSQL + Auth) with Row Level Security enforcing per-user data isolation.
 # Finlight
 
 A real, authenticated personal finance web app — track transactions, set monthly budgets, and understand your spending, backed by Supabase (PostgreSQL + Auth) with Row Level Security enforcing per-user data isolation.
