@@ -250,5 +250,6 @@ This is currently a personal/portfolio project without a formal contribution pro
 
 ## License
 
-No license file is currently included in this repository.
+Copyright © 2026 Bedirhan Elçik. All rights reserved.
 
+This project is published publicly for portfolio and educational purposes. The source code may be viewed for reference, but copying, redistribution, modification, or commercial use without explicit permission from the author is not permitted.
